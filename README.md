@@ -43,15 +43,14 @@ started is entertaining (that sounds rather mean) and useful in its own right.
 7. [Part 7: Conclusion](#part-7-conclusion)
 
 ## Part 1: Analysing the Problem (Four Step Plan)
-Let's sketch out the problem. My problem statement boils down to a single 
-line: 
+Let's sketch out the problem. The problem statement boils down to a single line: 
     
     "Given a captcha image, return the letters contained in that captcha."
 
-*But how?* Well, do we know of any system that can solve these captchas 
-already? Yes! Humans! It would be reasonable at this point to ask our humans 
-friends for 'inspiration'. How would a human solve this captcha? Breaking those 
-steps down would be a good start. What do these captchas even look like?
+*But how?* Do we know of any system that can already solve these captchas? 
+Humans! It would be reasonable to ask our humans friends for 'inspiration'. 
+How *would* a human solve this captcha? If we can break those steps down, it 
+would be a good start. What do these captchas even look like?
 
 <br>
 <p align="center">
@@ -59,8 +58,8 @@ steps down would be a good start. What do these captchas even look like?
 </p>
 <br>
 
-So as human, how would we solve the captcha above? (yes its blurry because 
-the original image is a tiny 20x60 pixels) The steps I would take for instance:
+So as human, how would we solve the captcha above? (its blurry because 
+the original image is a tiny 20x60 pixels). The steps I would take for instance:
 
     1. I see a red background that looks rather useless so I would ignore it.
     2. I see four distinct letters in black and would assume the captcha is only four letters.
@@ -153,13 +152,13 @@ Some of my observations were:
 2. The red background is not static and changes every time.
 3. The letters are uniformly spaced but vary (and sometimes get merged).
 4. The same exact font for each captcha (e.g. see the 'R' letter above in both captchas)
-5. There is 3 pixels of spacing above and below (except for letter J which I found out later!)
+5. There is always 3 pixels of spacing above and below a letter (except for 'J' which I found out only later!)
 
 Bullet point 4 is rather interesting. This means that we don't even need to 
 use neural networks for this problem! We can just store the images of each 
-letter as templates, and then do some form of sliding of these templates
-across the captcha until a perfect match is found. But no! Neural networks or
- nothing! So let us move on.
+letter as templates, and then do some form of sliding templates across the 
+captcha until a perfect match is found. But no! Neural networks or nothing! 
+So let us move on.
  
 Bullet point 2 implies that we can't just subtract a static background image 
 from the captchas, rather, we will have to do something more clever like 
@@ -176,13 +175,14 @@ captchas with the solutions, since the neural network we are going to build uses
 supervised learning (we need to teach it what the correct answer is first!).
 
 The amount of data we have exactly is 10k x 4 letters = 40k letters. The 
-captchas seem rather simple so perhaps we need not much data to train our 
-network. How much is enough? When I get tired of labelling. Actually, I'm not 
-even the one labelling, I have empowered a member of my household to do this 
-dutiful task.
+captchas seem rather simple so perhaps we don't need all that data to 
+train our network. But how would I know how much is enough? The answer is 
+when I get tired of labelling. Actually, I'm not even the one labelling, I 
+have empowered a member of my household to do this dutiful task. So when they
+get tired its over.
 
-Now we have 500 labelled captchas to start with. If we need more, we can come
- back to labelling them (well... get someone else to do the dirty work...).
+And... we have 500 labelled captchas to start with. If we need more, we can come
+back to labelling them.
 
 ## Part 4: Recycling Old Code
 To implement our four step plan from [part 1](#part-1-analysing-the-problem),
@@ -193,9 +193,9 @@ network to feed the extracted letters (this would involve [step 3](#step-3) and
 
 For letter extraction algorithm, I decided it was a good day to recycle some 
 code that I wrote two [two years ago](https://github.com/OthmanEmpire/project_elegance). 
-The idea was to use a ready GUI interface (see the GIF at the start) and a 
-tracking algorithm that would need little modification to do letter extraction. 
-The incentive was that it would save time. It was a good incentive...
+The idea was to use a ready GUI interface (e.g. GIF at the start of this guide) 
+and a tracking algorithm that would need little modification to do letter 
+extraction. The incentive was that it would save time. It was a good incentive...
 
 I had a fight with the docstrings, the awkward IO class, the funny naming 
 conventions, and truth be told, the code I wrote 2 years ago surprisingly 
@@ -203,7 +203,7 @@ wasn't bad at all, but my slight OCD to refactor code kicked in and... no time
 was saved, only lost.
 
 ## Part 5: Letter Detection Algorithm (Step 1 & Step 2)
-Now it is time to actually implement [step 1](#step-1) and [step 2](#step-2) of 
+Now it's time to actually implement [step 1](#step-1) and [step 2](#step-2) of 
 our plan, the letter detection algorithm. 
 
 #### Step 1 (implementation)
@@ -231,7 +231,7 @@ grayscale, then extract pixel values of 127 to 255 for any captcha.
       2.1 From our black and white image (step 1.1), I can extract four black regions that represent four letters.
       
 Now to extract the letters themselves, since they are not uniformly spaced as 
-noted beore, we can use OpenCV's contour detection algorithm in Python. 
+noted before, we can use OpenCV's contour detection algorithm in Python. 
 Simply put, a contour is a curve that encompasses pixels of the same value, 
 and in our case, the image like the one above should only have two colours 
 (black and white), so our contours should be black regions that map onto a 
