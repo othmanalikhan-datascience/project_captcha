@@ -345,37 +345,38 @@ Our neural network is going to be a generic convolution neural network:
 
 <br>
 <p align="center">
-    <img align="middle" width=300 src="data/README/part6_neural_diagram.png">
+    <img align="middle" width=225 src="data/README/part6_neural_diagram.png">
 </p>
 <br>
 
-Why two convolution layers and not one or three? Trail and error indicates 
-that one layer produces better results (about 5-10% accuracy increase in 
-solving the captchas). It seems that one convolution layer isn't sufficient 
-to capture enough details about the captcha and three makes it capture too 
-many unnecessary details.
+Why one convolution layers and not two or three? Trail and error indicates 
+that one layer produces the highest accuracy. It seems that one convolution 
+layer is sufficient to capture enough details about the captcha and anymore 
+captures too many unnecessary details that confuse matters.
 
-Playing around with the hidden layer (2nd dense layer in the diagram) doesn't 
-do much good either:
+Playing around with the hidden layer (2nd dense layer in the diagram) does 
+some good:
 
-        10 Nodes --> 0% accuracy
-        15 Nodes --> ~75% accuracy
-        20 Nodes --> ~75% accuracy
-        50 Nodes --> ~75% accuracy
-        100 Nodes --> ~75% accuracy
-        500 Nodes --> ~75% accuracy
-        1000 Nodes --> ~75% accuracy
+        50 Nodes ----> 40-65% accuracy
+        500 Nodes ---> 85-90% accuracy
+        1000 Nodes --> 85-90% accuracy
+        2000 Nodes --> 90-95% accuracy
         
-It looks like anything less than 15 nodes isn't sufficient to express the 
-structure of the captchas. For more complex captchas, I would imagine much 
-more nodes are needed but we are working with simple ones.
+The more nodes, the more the neural network learns of the intricacies of 
+the captcha image structure. Anything more than 2000 nodes ends up eating too
+much RAM on my PC so here is a good point to stop.
+
+Varying the size of the pooling window on the max pooling layer to (3, 3) 
+further bumps up the accuracy by 5-10%. It seems that considering a bigger 
+chunk of the convoluted image is better representative in identifying the 
+letter in the image.
 
 #### Step 4 (implementation)
 
     4. So the captcha is '01ZU'!
     
 Is it though? The accuracy of our convolution neural network (CNN) is about 
-65-85%, that is, it solves 65-85% of the captchas correctly. And of the 
+~90%, that is, it solves ~90% of the captchas correctly. And of the 
 cases it failed? How far away from the correct answer was it? Let's examine 
 some cases to see ways to improve this:
 
@@ -463,18 +464,18 @@ No idea. This one is rather mysterious...
 
 ## Part 7: Conclusion
 Hopefully you found that journey fruitful. In the end, the best our CNN 
-performed was ~85% accuracy which in my opinion is rather poor considering 
-how simple these captchas are actually.
+performed was 95% accuracy which is more than sufficient for my needs. 
 
-Perhaps CNN was not the best approach as discussed earlier, not because 
-better solutions like letter template matching exist for this dataset (the 
-letter shapes are always the same so this solution can achieve 100% accuracy
-with some quirks involved!), but because this CNN is highly dependant on the 
-input from the letter detection algorithm, which has its limitations when it
-comes to merged letters. So the CNN's true powers are held back by the previous 
-input.
+I would have hoped for it to be closer to 99% considering how simple these 
+captchas actually are. Perhaps CNN was not the best approach as discussed 
+earlier, not because better solutions like letter template matching exist 
+for this dataset (the letter shapes are always the same so this solution can
+achieve 100% accuracy with some quirks involved!), but because this CNN is 
+highly dependant on the input from the letter detection algorithm, which 
+has its limitations when it comes to merged letters. So the CNN's true 
+powers are held back by the previous input.
 
-There is room for improvement as discussed in 
+There is still room for improvement as discussed in 
 [part 6](#part-6-neural-network-step-3--step-4) with some solutions briefly 
 discussed, but for now, I will consider this project done and dusted. Now would 
 be a good time to say this: If there is anything more (or anything less) that 
@@ -513,7 +514,7 @@ do mv $f \`printf %06d_$f $i\`; ((i++)); done'
         
         
 ## Key Features
-- Solves captchas using a convolutional neural network (accuracy 65-85%).
+- Solves captchas using a convolutional neural network (accuracy 85-90%).
 - Allows quick analysis of processed captcha images using a custom GUI tool.
 - Contains two core algorithms: captcha letter detection & neural network captcha solver.
 - Dumps all processed images in a directory for later analysis (e.g. 'solved_incorrect')
@@ -542,8 +543,8 @@ do mv $f \`printf %06d_$f $i\`; ((i++)); done'
 2. Lutzroeder, NETRON, visualisation of the neural network:
     https://github.com/lutzroeder/Netron
     
-3. Marco Radic & Mario Mann, Novatec, another beautiful guide for solving more compelx captachs:
+3. Marco Radic & Mario Mann, Novatec, another beautiful guide for solving more complex captchas:
     https://www.novatec-gmbh.de/en/blog/deep-learning-for-end-to-end-captcha-solving/
     
-4. Sumit Saha, Towards Data Science, an-indepth guide on CNNs:
+4. Sumit Saha, Towards Data Science, an in-depth guide on CNNs:
     https://towardsdatascience.com/a-comprehensive-guide-to-convolutional-neural-networks-the-eli5-way-3bd2b1164a53

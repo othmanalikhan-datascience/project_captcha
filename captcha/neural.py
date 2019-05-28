@@ -58,16 +58,12 @@ class NeuralNetwork:
         model = Sequential()
 
         # First convolutional layer with max pooling
-        model.add(Conv2D(20, (5, 5), padding="same", input_shape=(20, 20, 1), activation="relu"))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+        model.add(Conv2D(20, (5, 5), padding="valid", input_shape=(20, 20, 1), activation="relu"))
+        model.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
 
-        # Second convolutional layer with max pooling
-        model.add(Conv2D(20, (5, 5), padding="same", activation="relu"))
-        model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-        # Hidden layer with 100 nodes
+        # Hidden layer with 2000 nodes
         model.add(Flatten())
-        model.add(Dense(100, activation="relu"))
+        model.add(Dense(2000, activation="relu"))
 
         # Output layer with 36 nodes (one for each possible letter/number we predict)
         model.add(Dense(36, activation="softmax"))
