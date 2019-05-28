@@ -120,10 +120,17 @@ class ImageDisplay(QtGui.QWidget):
         """
         def overrideArrowKeys(ev):
             if ev.key() == QtCore.Qt.Key_Right:
-                self.frame += 1
+                try:
+                    self.frame += 1
+                    self.updateImages()
+                except KeyError:
+                    self.frame -= 1
             elif ev.key() == QtCore.Qt.Key_Left:
-                self.frame -= 1
-            self.updateImages()
+                try:
+                    self.frame -= 1
+                    self.updateImages()
+                except KeyError:
+                    self.frame += 1
         self.topImageView.keyPressEvent = overrideArrowKeys
         self.leftImageView.keyPressEvent = overrideArrowKeys
         self.rightImageView.keyPressEvent = overrideArrowKeys
@@ -139,7 +146,7 @@ class ImageDisplay(QtGui.QWidget):
             "axes": {'x': 1, 'y': 0, 'c': 2}    # Flip image
         }
 
-        raw, _, _ = self.imageHandler.read(self.frame, "input")
+        raw, _, _ = self.imageHandler.read(self.frame, "validation")
         self.topImageView.setImage(raw, **kwargs)
 
         solved, _, _ = self.imageHandler.read(self.frame, "output/solved")
