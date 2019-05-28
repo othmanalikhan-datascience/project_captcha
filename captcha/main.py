@@ -19,7 +19,7 @@ def main():
     param = \
         {
             "fStart":       1,
-            "fEnd":         541,
+            "fEnd":         1041,
             "fInterval":    500,  # milliseconds
             "fDiff":        1,
             "fSpeedFactor": 1,
