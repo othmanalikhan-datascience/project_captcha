@@ -106,7 +106,7 @@ class Solver:
 
         # Solve captchas and save output
         for i in range(1, numberImages+1):
-            img, solution, num = imageHandler.read(i, "input")
+            img, solution, num = imageHandler.read(i, "validation")
             captcha, outImage = self.solveCaptcha(img, model, labeller, imageFilter)
             results[solution] = captcha
 

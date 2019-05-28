@@ -16,22 +16,23 @@ from solver import Solver
 
 
 def main():
-    param = \
+    pRender = \
         {
-            "fStart":       1,
-            "fEnd":         1041,
+            "fStart":       1,    # First image in validation dataset to render
+            "fEnd":         200,  # Last image in validation dataset to render
             "fInterval":    500,  # milliseconds
             "fDiff":        1,
             "fSpeedFactor": 1,
         }
 
     PATH_DATA = os.path.join("..", "data")
-    PATH_INP = os.path.join(PATH_DATA, "input")
     PATH_OUT = os.path.join(PATH_DATA, "output")
+
+    PATH_TRAINING = os.path.join(PATH_OUT, "letters")
+    PATH_VALIDATION = os.path.join(PATH_DATA, "validation")
 
     PATH_MODEL = os.path.join(PATH_OUT, "model.hdf5")
     PATH_LABEL = os.path.join(PATH_OUT, "labels.dat")
-    PATH_TRAIN = os.path.join(PATH_OUT, "letters")
 
     # Cleanup old results
     shutil.rmtree(PATH_OUT, ignore_errors=True)
@@ -39,25 +40,25 @@ def main():
 
     # Pre-rendering images
     preRenderer = AnimationPreRenderer(ImageHandler(PATH_DATA))
-    preRenderer.generateLetterDetectionImages(param["fStart"], param["fEnd"])
-    preRenderer.generateOtsuImages(param["fStart"], param["fEnd"])
+    preRenderer.generateLetterDetectionImages(pRender["fStart"], pRender["fEnd"])
+    preRenderer.generateOtsuImages(pRender["fStart"], pRender["fEnd"])
     # preRenderer.generateDifferenceImages(param["fStart"], param["fEnd"], param["fDiff"])
     # imageController = ImageController(param, PATH_DATA)
     # imageController.preRenderAllAnimation(param["fDiff"])
 
     # Train our neural network
-    neuralNetwork = NeuralNetwork(PATH_TRAIN, PATH_MODEL, PATH_LABEL)
+    neuralNetwork = NeuralNetwork(PATH_TRAINING, PATH_MODEL, PATH_LABEL)
     neuralNetwork.build()
     neuralNetwork.train()
 
     # Solve for our data
     solver = Solver()
-    solver.run(PATH_INP, PATH_MODEL, PATH_LABEL)
+    solver.run(PATH_VALIDATION, PATH_MODEL, PATH_LABEL)
 
     # Choose display mode
-    imageController = ImageController(param, PATH_DATA)
+    imageController = ImageController(pRender, PATH_DATA)
     imageController.runInteractiveMode()
-    imageController.runAnimationMode(param["fInterval"], param["fSpeedFactor"])
+    imageController.runAnimationMode(pRender["fInterval"], pRender["fSpeedFactor"])
 
 
 if __name__ == "__main__":

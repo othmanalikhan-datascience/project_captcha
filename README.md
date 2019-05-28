@@ -359,12 +359,12 @@ Playing around with the hidden layer (2nd dense layer in the diagram) doesn't
 do much good either:
 
         10 Nodes --> 0% accuracy
-        15 Nodes --> ~85% accuracy
-        20 Nodes --> ~85% accuracy
-        50 Nodes --> ~85% accuracy
-        100 Nodes --> ~85% accuracy
-        500 Nodes --> ~85% accuracy
-        1000 Nodes --> ~85% accuracy
+        15 Nodes --> ~75% accuracy
+        20 Nodes --> ~75% accuracy
+        50 Nodes --> ~75% accuracy
+        100 Nodes --> ~75% accuracy
+        500 Nodes --> ~75% accuracy
+        1000 Nodes --> ~75% accuracy
         
 It looks like anything less than 15 nodes isn't sufficient to express the 
 structure of the captchas. For more complex captchas, I would imagine much 
@@ -375,7 +375,7 @@ more nodes are needed but we are working with simple ones.
     4. So the captcha is '01ZU'!
     
 Is it though? The accuracy of our convolution neural network (CNN) is about 
-85-95%, that is, it solves 85-95% of the captchas correctly. And of the 
+65-85%, that is, it solves 65-85% of the captchas correctly. And of the 
 cases it failed? How far away from the correct answer was it? Let's examine 
 some cases to see ways to improve this:
 
@@ -463,7 +463,8 @@ No idea. This one is rather mysterious...
 
 ## Part 7: Conclusion
 Hopefully you found that journey fruitful. In the end, the best our CNN 
-performed was ~95% accuracy which for my purposes is more than sufficient. 
+performed was ~85% accuracy which in my opinion is rather poor considering 
+how simple these captchas are actually.
 
 Perhaps CNN was not the best approach as discussed earlier, not because 
 better solutions like letter template matching exist for this dataset (the 
@@ -475,10 +476,9 @@ input.
 
 There is room for improvement as discussed in 
 [part 6](#part-6-neural-network-step-3--step-4) with some solutions briefly 
-discussed, but again, ~95% accuracy is way more than enough for my needs, so 
-I will consider this project done and dusted. Now would be a good time to say
-this: If there is anything more (or anything less) that you would have liked me 
-to mention, please let me know! 
+discussed, but for now, I will consider this project done and dusted. Now would 
+be a good time to say this: If there is anything more (or anything less) that 
+you would have liked me to mention, please let me know! 
  
 Our fleshed out algorithm that we implemented now is:
 
@@ -513,7 +513,7 @@ do mv $f \`printf %06d_$f $i\`; ((i++)); done'
         
         
 ## Key Features
-- Solves captchas using a convolutional neural network (accuracy 85-90%).
+- Solves captchas using a convolutional neural network (accuracy 65-85%).
 - Allows quick analysis of processed captcha images using a custom GUI tool.
 - Contains two core algorithms: captcha letter detection & neural network captcha solver.
 - Dumps all processed images in a directory for later analysis (e.g. 'solved_incorrect')

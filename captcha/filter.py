@@ -193,7 +193,7 @@ class AnimationPreRenderer:
         """
         for f in range(fStart, fEnd+1):
             print("Letter tracking rendering progress: %d/%d frames" % (f, fEnd))
-            img, label, num = self.imageHandler.read(f, "input")
+            img, label, num = self.imageHandler.read(f, "validation")
             letterRegions = self.imageFilter.computeLetterDetectionAlgorithm(img)
 
             # First save letters as individual images
@@ -222,8 +222,8 @@ class AnimationPreRenderer:
         """
         for f in range(fStart, fEnd):
             print("Difference rendering progress: %d/%d frames" % (f, fEnd))
-            img1, num, label = self.imageHandler.read(f, "input")
-            img2, _, _ = self.imageHandler.read(f + fDiff, "input")
+            img1, num, label = self.imageHandler.read(f, "validation")
+            img2, _, _ = self.imageHandler.read(f + fDiff, "validation")
             diff = self.imageFilter.computeDifferenceAlgorithm(img1, img2)
             self.imageHandler.write(diff, num, label, "output/difference")
 
@@ -237,7 +237,7 @@ class AnimationPreRenderer:
         """
         for f in range(fStart, fEnd+1):
             print("Otsu rendering progress: %d/%d frames" % (f, fEnd))
-            img, num, label = self.imageHandler.read(f, "input")
+            img, num, label = self.imageHandler.read(f, "validation")
             args = (img, 110, 255, cv2.THRESH_BINARY)
             _, thresh = self.imageFilter.computeOtsuAlgorithm(*args)
             self.imageHandler.write(thresh, num, label, "output/otsu")
