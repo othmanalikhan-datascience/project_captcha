@@ -504,10 +504,11 @@ Our fleshed out algorithm that we implemented now is:
 ## How to Use
 1. Install all dependencies with `pip install -r requirements.txt`
 2. Original data is located in `data/dataset` (10k captchas, 1041 labelled).
-3. Training data is already unzipped and named appropriately in `data/input`.
-4. Navigate to `captcha/main.py` and comment code as need be (e.g. only enable GUI analysis tool).
-5. Run `python main.py` from the `captcha` directory.
-6. See results in `data/output`.
+3. Training data is already unzipped and named appropriately in `data/training`.
+4. Validation data is already unzipped and named appropriately in `data/validation`.
+5. Navigate to `captcha/main.py` and comment code as need be (e.g. only enable GUI analysis tool).
+6. Run `python main.py` from the `captcha` directory.
+7. See results in `data/output`.
 
 Note: Useful command for renaming input directory, 'let i=0; for f in $(ls); 
 do mv $f \`printf %06d_$f $i\`; ((i++)); done'
