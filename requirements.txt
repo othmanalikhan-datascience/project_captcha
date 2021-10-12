@@ -1,7 +1,7 @@
 imutils==0.5.2
 keras==2.2.4
 numpy==1.16.2
-opencv-python==4.1.0.25
+opencv-python==4.1.1.26
 pyqtgraph==0.10.0
 scikit-learn==0.20.3
 tensorflow==1.13.1
